@@ -1,0 +1,5 @@
+name: nachtcafe
+version: '1.0-SNAPSHOT'
+main: de.chaosjan44.nachtcafe.Nachtcafe
+api-version: '1.21'
+depend: [ LuckPerms ]
