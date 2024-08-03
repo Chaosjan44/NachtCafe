@@ -4,6 +4,7 @@ import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
 import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -18,9 +19,8 @@ public final class Nachtcafe extends JavaPlugin {
     }
     public static LuckPerms luckPerms = null;
 
-    public static Component PREFIX = (Component.text("HC").color(NamedTextColor.DARK_PURPLE)
-            .append(Component.text("-").color(NamedTextColor.DARK_GRAY))
-            .append(Component.text("System").color(NamedTextColor.DARK_PURPLE))
+    public static Component PREFIX = (Component.text("Nacht").color(TextColor.fromCSSHexString("#C849FF"))
+            .append(Component.text("Cafe").color(TextColor.fromCSSHexString("#0CFFB6")))
             .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY)));
     private LuckPermsWorker luckPermsWorker;
 

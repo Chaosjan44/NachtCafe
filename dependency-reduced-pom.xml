@@ -4,7 +4,7 @@
   <groupId>de.chaosjan44</groupId>
   <artifactId>NachtCafe</artifactId>
   <name>NachtCafe</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <build>
     <defaultGoal>clean package</defaultGoal>
     <resources>

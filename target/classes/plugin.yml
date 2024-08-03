@@ -1,5 +1,7 @@
-name: nachtcafe
-version: '1.0-SNAPSHOT'
+name: NachtCafe
+version: '1.0'
 main: de.chaosjan44.nachtcafe.Nachtcafe
 api-version: '1.21'
+website: https://chaosjan44.de/
+author: Chaosjan44
 depend: [ LuckPerms ]
