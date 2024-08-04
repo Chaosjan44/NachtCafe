@@ -1,9 +1,13 @@
 package de.chaosjan44.nachtcafe;
 
+import de.chaosjan44.nachtcafe.Commands.Util.TabCompleter;
+import de.chaosjan44.nachtcafe.Commands.Warp.*;
+import de.chaosjan44.nachtcafe.Configs.WarpConfig;
 import de.chaosjan44.nachtcafe.Listener.ChatListener;
 import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
 import de.chaosjan44.nachtcafe.Util.ColorHelper;
 import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
+import de.chaosjan44.nachtcafe.Util.WarpHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -13,19 +17,32 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class Nachtcafe extends JavaPlugin {
 
-    public static Nachtcafe INSTANCE;
     public Nachtcafe() {
         INSTANCE = this;
     }
+    public static Nachtcafe INSTANCE;
+    public static Component PREFIX = (Component.text("N").color(TextColor.fromCSSHexString("#C849FF"))
+            .append(Component.text("a").color(TextColor.fromCSSHexString("#B160F6")))
+            .append(Component.text("c").color(TextColor.fromCSSHexString("#9977ED")))
+            .append(Component.text("h").color(TextColor.fromCSSHexString("#828DE4")))
+            .append(Component.text("t").color(TextColor.fromCSSHexString("#6AA4DB")))
+            .append(Component.text("C").color(TextColor.fromCSSHexString("#53BBD1")))
+            .append(Component.text("a").color(TextColor.fromCSSHexString("#3BD2C8")))
+            .append(Component.text("f").color(TextColor.fromCSSHexString("#24E8BF")))
+            .append(Component.text("e").color(TextColor.fromCSSHexString("#0CFFB6")))
+            .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY)));
+
     public static LuckPerms luckPerms = null;
 
-    public static Component PREFIX = (Component.text("Nacht").color(TextColor.fromCSSHexString("#C849FF"))
-            .append(Component.text("Cafe").color(TextColor.fromCSSHexString("#0CFFB6")))
-            .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY)));
+    private WarpConfig warpConfig;
+
     private LuckPermsWorker luckPermsWorker;
     private ColorHelper colorHelper;
+    private WarpHandler warpHandler;
 
 
     @Override
@@ -60,14 +77,43 @@ public final class Nachtcafe extends JavaPlugin {
     }
 
     public void registration(PluginManager pluginManager) {
-        luckPermsWorker = new LuckPermsWorker(this);
-        colorHelper = new ColorHelper(this);
+        // register config getters
+        warpConfig = new WarpConfig(this);
+
+        // register listeners
         pluginManager.registerEvents(new JoinLeaveListener(this), this);
         pluginManager.registerEvents(new ChatListener(this),this);
+
+        // register comands
+        Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand(this));
+        Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("warps")).setExecutor(new WarpsCommand(this));
+        Objects.requireNonNull(this.getCommand("warps")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("spawn")).setExecutor(new SpawnCommand(this));
+        Objects.requireNonNull(this.getCommand("spawn")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new SetwarpCommand(this));
+        Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("delwarp")).setExecutor(new DelwarpCommand(this));
+        Objects.requireNonNull(this.getCommand("delwarp")).setTabCompleter(new TabCompleter(this));
+
+        // register utils
+        luckPermsWorker = new LuckPermsWorker(this);
+        colorHelper = new ColorHelper();
+        warpHandler = new WarpHandler(this);
+
+        // load warps
+        warpHandler.loadWarpList();
     }
     public LuckPerms getLuckPerms() {return luckPerms;}
 
+    public WarpConfig getWarpConfig() {return warpConfig;}
+
     public LuckPermsWorker getLuckPermsWorker() {return luckPermsWorker;}
     public ColorHelper getColorHelper() {return colorHelper;}
+    public WarpHandler getWarpHandler() {return warpHandler;}
 
 }

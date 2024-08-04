@@ -1,6 +1,5 @@
 package de.chaosjan44.nachtcafe.Util;
 
-import de.chaosjan44.nachtcafe.Nachtcafe;
 import org.bukkit.ChatColor;
 
 import java.util.regex.Matcher;
@@ -8,8 +7,6 @@ import java.util.regex.Pattern;
 
 public class ColorHelper {
 
-    private final Nachtcafe plugin;
-    public ColorHelper(Nachtcafe plugin) {this.plugin = plugin;}
 
     private static final Pattern HEX_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
 
@@ -23,7 +20,7 @@ public class ColorHelper {
         final char colorChar = ChatColor.COLOR_CHAR;
 
         final Matcher matcher = HEX_PATTERN.matcher(message);
-        final StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
+        final StringBuilder buffer = new StringBuilder(message.length() + 4 * 8);
 
         while (matcher.find()) {
             final String group = matcher.group(1);
