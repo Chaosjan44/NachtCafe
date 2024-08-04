@@ -1,6 +1,8 @@
 package de.chaosjan44.nachtcafe;
 
+import de.chaosjan44.nachtcafe.Listener.ChatListener;
 import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
+import de.chaosjan44.nachtcafe.Util.ColorHelper;
 import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -23,6 +25,7 @@ public final class Nachtcafe extends JavaPlugin {
             .append(Component.text("Cafe").color(TextColor.fromCSSHexString("#0CFFB6")))
             .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY)));
     private LuckPermsWorker luckPermsWorker;
+    private ColorHelper colorHelper;
 
 
     @Override
@@ -56,12 +59,15 @@ public final class Nachtcafe extends JavaPlugin {
         return true;
     }
 
-
     public void registration(PluginManager pluginManager) {
         luckPermsWorker = new LuckPermsWorker(this);
+        colorHelper = new ColorHelper(this);
         pluginManager.registerEvents(new JoinLeaveListener(this), this);
+        pluginManager.registerEvents(new ChatListener(this),this);
     }
+    public LuckPerms getLuckPerms() {return luckPerms;}
 
     public LuckPermsWorker getLuckPermsWorker() {return luckPermsWorker;}
-    public LuckPerms getLuckPerms() {return luckPerms;}
+    public ColorHelper getColorHelper() {return colorHelper;}
+
 }
