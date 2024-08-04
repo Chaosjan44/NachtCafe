@@ -6,7 +6,7 @@
 
     <groupId>de.chaosjan44</groupId>
     <artifactId>NachtCafe</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>NachtCafe</name>

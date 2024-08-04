@@ -19,7 +19,6 @@ public class WarpHandler {
     public List<String> warps;
 
     public void loadWarpList() {
-        if (warps != null) warps.clear();
         WarpConfig warpConfig = plugin.getWarpConfig();
         warps = warpConfig.getConfig().getStringList("warps.list");
     }
