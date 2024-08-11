@@ -40,7 +40,6 @@ public final class Nachtcafe extends JavaPlugin {
     private WarpConfig warpConfig;
 
     private LuckPermsWorker luckPermsWorker;
-    private ColorHelper colorHelper;
     private WarpHandler warpHandler;
     private AFKHandler afkHandler;
     Timer timer = new Timer(this);
@@ -105,7 +104,6 @@ public final class Nachtcafe extends JavaPlugin {
 
         // register utils
         luckPermsWorker = new LuckPermsWorker(this);
-        colorHelper = new ColorHelper();
         warpHandler = new WarpHandler(this);
         afkHandler = new AFKHandler(this);
 
@@ -118,7 +116,6 @@ public final class Nachtcafe extends JavaPlugin {
     public WarpConfig getWarpConfig() {return warpConfig;}
 
     public LuckPermsWorker getLuckPermsWorker() {return luckPermsWorker;}
-    public ColorHelper getColorHelper() {return colorHelper;}
     public WarpHandler getWarpHandler() {return warpHandler;}
     public AFKHandler getAfkHandler() {return afkHandler;}
     public Timer getTimer() {return timer;}
