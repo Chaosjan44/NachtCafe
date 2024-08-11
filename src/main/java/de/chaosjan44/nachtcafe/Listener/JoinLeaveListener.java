@@ -20,6 +20,7 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
+        plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
         event.joinMessage(Component.text('[').color(NamedTextColor.DARK_GRAY)
                 .append(Component.text('+').color(NamedTextColor.GREEN))
@@ -30,6 +31,7 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void playerQuitEvent(PlayerQuitEvent event) {
+        plugin.getAfkHandler().removeFromAfk(event.getPlayer());
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
         event.quitMessage(Component.text('[').color(NamedTextColor.DARK_GRAY)
                 .append(Component.text('-').color(NamedTextColor.RED))
@@ -37,7 +39,4 @@ public class JoinLeaveListener implements Listener {
                 .append(LegacyComponentSerializer.legacyAmpersand().deserialize(luckPermsWorker.getPrefix(event.getPlayer())))
                 .append(Component.text(event.getPlayer().getName()).color(NamedTextColor.WHITE)));
     }
-
-
-
 }

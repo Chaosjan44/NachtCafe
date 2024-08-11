@@ -5,9 +5,8 @@ import de.chaosjan44.nachtcafe.Commands.Warp.*;
 import de.chaosjan44.nachtcafe.Configs.WarpConfig;
 import de.chaosjan44.nachtcafe.Listener.ChatListener;
 import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
-import de.chaosjan44.nachtcafe.Util.ColorHelper;
-import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
-import de.chaosjan44.nachtcafe.Util.WarpHandler;
+import de.chaosjan44.nachtcafe.Listener.PlayerMoveListener;
+import de.chaosjan44.nachtcafe.Util.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -43,6 +42,8 @@ public final class Nachtcafe extends JavaPlugin {
     private LuckPermsWorker luckPermsWorker;
     private ColorHelper colorHelper;
     private WarpHandler warpHandler;
+    private AFKHandler afkHandler;
+    Timer timer = new Timer(this);
 
 
     @Override
@@ -60,6 +61,7 @@ public final class Nachtcafe extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        afkHandler.stopAFKTimer();
         getComponentLogger().info(PREFIX.append(Component.text("Successfully disabled.").color(NamedTextColor.GREEN)));
     }
 
@@ -83,6 +85,7 @@ public final class Nachtcafe extends JavaPlugin {
         // register listeners
         pluginManager.registerEvents(new JoinLeaveListener(this), this);
         pluginManager.registerEvents(new ChatListener(this),this);
+        pluginManager.registerEvents(new PlayerMoveListener(this), this);
 
         // register comands
         Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand(this));
@@ -104,9 +107,11 @@ public final class Nachtcafe extends JavaPlugin {
         luckPermsWorker = new LuckPermsWorker(this);
         colorHelper = new ColorHelper();
         warpHandler = new WarpHandler(this);
+        afkHandler = new AFKHandler(this);
 
         // load warps
         warpHandler.loadWarpList();
+        afkHandler.startAFKTimer();
     }
     public LuckPerms getLuckPerms() {return luckPerms;}
 
@@ -115,5 +120,6 @@ public final class Nachtcafe extends JavaPlugin {
     public LuckPermsWorker getLuckPermsWorker() {return luckPermsWorker;}
     public ColorHelper getColorHelper() {return colorHelper;}
     public WarpHandler getWarpHandler() {return warpHandler;}
-
+    public AFKHandler getAfkHandler() {return afkHandler;}
+    public Timer getTimer() {return timer;}
 }
