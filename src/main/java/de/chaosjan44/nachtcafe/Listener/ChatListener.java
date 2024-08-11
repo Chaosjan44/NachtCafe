@@ -23,7 +23,7 @@ public class ChatListener implements Listener {
         final String message = event.getMessage();
         final Player player = event.getPlayer();
 
-        String format = "{prefix}{name}&r: {message}"
+        String format = "{prefix}{name} &7»&r {message}"
                 .replace("{prefix}", luckPermsWorker.getPrefix(player) != null ? luckPermsWorker.getPrefix(player) : "")
                 .replace("{name}", player.getName());
 
