@@ -2,6 +2,7 @@ package de.chaosjan44.nachtcafe.Listener;
 
 import de.chaosjan44.nachtcafe.Nachtcafe;
 import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
+import de.chaosjan44.nachtcafe.Util.UserDataHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -20,6 +21,9 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
+        UserDataHandler userData = new UserDataHandler(plugin, event.getPlayer().getUniqueId());
+        userData.createUser(event.getPlayer());
+        userData.reloadConfig();
         plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
         event.joinMessage(Component.text('[').color(NamedTextColor.DARK_GRAY)

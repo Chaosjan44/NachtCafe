@@ -41,7 +41,7 @@ public class ChatListener implements Listener, ChatRenderer {
         plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onCommand(PlayerCommandSendEvent event) {
         plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
     }
