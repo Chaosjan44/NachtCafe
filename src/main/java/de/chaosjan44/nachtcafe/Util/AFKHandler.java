@@ -51,6 +51,16 @@ public class AFKHandler {
         startAFKTimer();
     }
 
+    public void setAfk(Player player) {
+        if (!afkPlayers.contains(player)) {
+            plugin.getServer().broadcast(Component.text("* ").color(NamedTextColor.GRAY)
+                    .append(Component.text(player.getName()).color(NamedTextColor.GRAY))
+                    .append(Component.text(" is now AFK.").color(NamedTextColor.GRAY)));
+            afkPlayers.add(player);
+        }
+        afkPTimer.remove(player);
+    }
+
     // only needed on disconnect
     public void removeFromAfk(Player player) {
         if (afkPlayers.contains(player)) {
@@ -59,11 +69,8 @@ public class AFKHandler {
                     .append(Component.text(" is no longer AFK.").color(NamedTextColor.GRAY)));
             afkPlayers.remove(player);
         }
-        if (afkPTimer.containsKey(player)) {
-            afkPTimer.remove(player);
-        }
+        afkPTimer.remove(player);
     }
-
 
     public void startAFKTimer() {
         Timer timer = plugin.getTimer();

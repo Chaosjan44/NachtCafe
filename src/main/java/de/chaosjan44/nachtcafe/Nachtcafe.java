@@ -1,7 +1,9 @@
 package de.chaosjan44.nachtcafe;
 
+import de.chaosjan44.nachtcafe.Commands.AfkCommand;
 import de.chaosjan44.nachtcafe.Commands.Util.TabCompleter;
 import de.chaosjan44.nachtcafe.Commands.Warp.*;
+import de.chaosjan44.nachtcafe.Commands.WbCommand;
 import de.chaosjan44.nachtcafe.Configs.WarpConfig;
 import de.chaosjan44.nachtcafe.Listener.ChatListener;
 import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
@@ -101,6 +103,12 @@ public final class Nachtcafe extends JavaPlugin {
 
         Objects.requireNonNull(this.getCommand("delwarp")).setExecutor(new DelwarpCommand(this));
         Objects.requireNonNull(this.getCommand("delwarp")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("afk")).setExecutor(new AfkCommand(this));
+        Objects.requireNonNull(this.getCommand("afk")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("wb")).setExecutor(new WbCommand(this));
+        Objects.requireNonNull(this.getCommand("wb")).setTabCompleter(new TabCompleter(this));
 
         // register utils
         luckPermsWorker = new LuckPermsWorker(this);

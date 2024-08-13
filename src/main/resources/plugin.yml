@@ -18,3 +18,9 @@ commands:
   delwarp:
     description: delete a warp point
     permission: nachtcafe.warp.del
+  afk:
+    description: set's you afk removes you form afk players
+  wb:
+    description: gets you back from afk.
+    aliases:
+      - back
