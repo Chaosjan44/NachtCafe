@@ -5,6 +5,7 @@ import de.chaosjan44.nachtcafe.Commands.Home.DelhomeCommand;
 import de.chaosjan44.nachtcafe.Commands.Home.HomeCommand;
 import de.chaosjan44.nachtcafe.Commands.Home.HomesCommand;
 import de.chaosjan44.nachtcafe.Commands.Home.SethomeCommand;
+import de.chaosjan44.nachtcafe.Commands.Util.GamemodeCommand;
 import de.chaosjan44.nachtcafe.Commands.Util.TabCompleter;
 import de.chaosjan44.nachtcafe.Commands.Warp.*;
 import de.chaosjan44.nachtcafe.Commands.WbCommand;
@@ -56,7 +57,7 @@ public final class Nachtcafe extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         if (!setupLuckPerms()) {
-            getComponentLogger().error(PREFIX.append(Component.text("Can't get ahold of LuckPerms - disabling now.").color(NamedTextColor.DARK_RED)));
+            getComponentLogger().error(PREFIX.append(Component.text("Can't get LuckPerms - disabling now.").color(NamedTextColor.DARK_RED)));
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -68,6 +69,7 @@ public final class Nachtcafe extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         afkHandler.stopAFKTimer();
+        homeHandler.disableHomes();
         getComponentLogger().info(PREFIX.append(Component.text("Successfully disabled.").color(NamedTextColor.GREEN)));
     }
 
@@ -93,7 +95,7 @@ public final class Nachtcafe extends JavaPlugin {
         pluginManager.registerEvents(new ChatListener(this),this);
         pluginManager.registerEvents(new PlayerMoveListener(this), this);
 
-        // register comands
+        // register commands
         // Warp Stuff
         Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand(this));
         Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new TabCompleter(this));
@@ -129,6 +131,10 @@ public final class Nachtcafe extends JavaPlugin {
 
         Objects.requireNonNull(this.getCommand("home")).setExecutor(new HomeCommand(this));
         Objects.requireNonNull(this.getCommand("home")).setTabCompleter(new TabCompleter(this));
+
+        // extra stuff
+        Objects.requireNonNull(this.getCommand("gamemode")).setExecutor(new GamemodeCommand());
+        Objects.requireNonNull(this.getCommand("gamemode")).setTabCompleter(new TabCompleter(this));
 
         // register utils
         luckPermsWorker = new LuckPermsWorker(this);

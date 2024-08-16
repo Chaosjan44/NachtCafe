@@ -36,3 +36,8 @@ commands:
   home:
     description: teleports you to a home.
     permission: nachtcafe.home
+  gamemode:
+    aliases:
+      - gm
+    description: switches your gamemode
+    permission: nachtcafe.gamemode

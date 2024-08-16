@@ -36,7 +36,7 @@ public class AFKHandler {
                 long timestamp = entry.getValue();
                 long curtime= System.currentTimeMillis();
                 long diff = Math.abs(curtime - timestamp);
-                // minutes a player needs to be afk to be markes as afk
+                // minutes a player needs to be afk to be marked as afk
                 int afkmin = 5;
                 if (diff > afkmin * 60 * 1000) {
                     afkPlayers.add(player);

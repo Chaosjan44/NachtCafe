@@ -121,5 +121,10 @@ public class HomeHandler {
         return new Location(world, x, y, z, yaw, pitch);
     }
 
+    public void disableHomes() {
+        playerHomesList.clear();
+        playerHomes.clear();
+        playerHomesCount.clear();
+    }
 
 }

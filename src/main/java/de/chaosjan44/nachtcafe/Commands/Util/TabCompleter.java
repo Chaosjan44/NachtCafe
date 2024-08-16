@@ -2,8 +2,10 @@ package de.chaosjan44.nachtcafe.Commands.Util;
 
 import de.chaosjan44.nachtcafe.Nachtcafe;
 import de.chaosjan44.nachtcafe.Util.HomeItem;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -55,6 +57,22 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                     homesString.add(home.getHomeName());
                 }
                 return completionPerChar(args[0], homesString);
+            } else {
+                return empty;
+            }
+        } else if (command.getName().equalsIgnoreCase("gamemode") || command.getName().equalsIgnoreCase("gm")) {
+            if (args.length == 1) {
+                List<String> gms = new ArrayList<>();
+                gms.add("s");
+                gms.add("c");
+                gms.add("a");
+                gms.add("sp");
+                return completionPerChar(args[0], gms);
+            } else if (args.length == 2 && sender.hasPermission("nachtcafe.gamemode.others")) {
+                List<String> oPlayers = new ArrayList<>();
+                for (Player p : Bukkit.getOnlinePlayers())
+                    oPlayers.add(p.getName());
+                return completionPerChar(args[1], oPlayers);
             } else {
                 return empty;
             }
