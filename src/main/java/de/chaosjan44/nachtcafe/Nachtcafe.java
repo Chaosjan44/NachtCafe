@@ -1,6 +1,10 @@
 package de.chaosjan44.nachtcafe;
 
 import de.chaosjan44.nachtcafe.Commands.AfkCommand;
+import de.chaosjan44.nachtcafe.Commands.Home.DelhomeCommand;
+import de.chaosjan44.nachtcafe.Commands.Home.HomeCommand;
+import de.chaosjan44.nachtcafe.Commands.Home.HomesCommand;
+import de.chaosjan44.nachtcafe.Commands.Home.SethomeCommand;
 import de.chaosjan44.nachtcafe.Commands.Util.TabCompleter;
 import de.chaosjan44.nachtcafe.Commands.Warp.*;
 import de.chaosjan44.nachtcafe.Commands.WbCommand;
@@ -44,6 +48,7 @@ public final class Nachtcafe extends JavaPlugin {
     private LuckPermsWorker luckPermsWorker;
     private WarpHandler warpHandler;
     private AFKHandler afkHandler;
+    private HomeHandler homeHandler;
     Timer timer = new Timer(this);
 
 
@@ -89,6 +94,7 @@ public final class Nachtcafe extends JavaPlugin {
         pluginManager.registerEvents(new PlayerMoveListener(this), this);
 
         // register comands
+        // Warp Stuff
         Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand(this));
         Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new TabCompleter(this));
 
@@ -104,20 +110,36 @@ public final class Nachtcafe extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("delwarp")).setExecutor(new DelwarpCommand(this));
         Objects.requireNonNull(this.getCommand("delwarp")).setTabCompleter(new TabCompleter(this));
 
+        //AFK Stuff
         Objects.requireNonNull(this.getCommand("afk")).setExecutor(new AfkCommand(this));
         Objects.requireNonNull(this.getCommand("afk")).setTabCompleter(new TabCompleter(this));
 
         Objects.requireNonNull(this.getCommand("wb")).setExecutor(new WbCommand(this));
         Objects.requireNonNull(this.getCommand("wb")).setTabCompleter(new TabCompleter(this));
 
+        // Home Stuff
+        Objects.requireNonNull(this.getCommand("sethome")).setExecutor(new SethomeCommand(this));
+        Objects.requireNonNull(this.getCommand("sethome")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("delhome")).setExecutor(new DelhomeCommand(this));
+        Objects.requireNonNull(this.getCommand("delhome")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("homes")).setExecutor(new HomesCommand(this));
+        Objects.requireNonNull(this.getCommand("homes")).setTabCompleter(new TabCompleter(this));
+
+        Objects.requireNonNull(this.getCommand("home")).setExecutor(new HomeCommand(this));
+        Objects.requireNonNull(this.getCommand("home")).setTabCompleter(new TabCompleter(this));
+
         // register utils
         luckPermsWorker = new LuckPermsWorker(this);
         warpHandler = new WarpHandler(this);
         afkHandler = new AFKHandler(this);
+        homeHandler = new HomeHandler(this);
 
         // load warps
         warpHandler.loadWarpList();
         afkHandler.startAFKTimer();
+        homeHandler.loadAllOnlinePlayerHomes();
     }
     public LuckPerms getLuckPerms() {return luckPerms;}
 
@@ -126,5 +148,6 @@ public final class Nachtcafe extends JavaPlugin {
     public LuckPermsWorker getLuckPermsWorker() {return luckPermsWorker;}
     public WarpHandler getWarpHandler() {return warpHandler;}
     public AFKHandler getAfkHandler() {return afkHandler;}
+    public HomeHandler getHomeHandler() {return homeHandler;}
     public Timer getTimer() {return timer;}
 }

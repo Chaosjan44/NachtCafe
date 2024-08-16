@@ -24,3 +24,15 @@ commands:
     description: gets you back from afk.
     aliases:
       - back
+  sethome:
+    description: sets your home.
+    permission: nachtcafe.home
+  delhome:
+    description: deletes your home.
+    permission: nachtcafe.home
+  homes:
+    description: shows you your homes.
+    permission: nachtcafe.home
+  home:
+    description: teleports you to a home.
+    permission: nachtcafe.home

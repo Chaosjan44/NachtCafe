@@ -1,6 +1,7 @@
 package de.chaosjan44.nachtcafe.Commands.Util;
 
 import de.chaosjan44.nachtcafe.Nachtcafe;
+import de.chaosjan44.nachtcafe.Util.HomeItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +33,28 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
         } else if (command.getName().equalsIgnoreCase("delwarp")) {
             if (args.length == 1) {
                 return completionPerChar(args[0], plugin.getWarpHandler().warps);
+            } else {
+                return empty;
+            }
+        } else if (command.getName().equalsIgnoreCase("delhome")) {
+            if (args.length == 1) {
+                List<HomeItem> homes = plugin.getHomeHandler().playerHomes.get(sender);
+                List<String> homesString = new ArrayList<>();
+                for (HomeItem home : homes) {
+                    homesString.add(home.getHomeName());
+                }
+                return completionPerChar(args[0], homesString);
+            } else {
+                return empty;
+            }
+        } else if (command.getName().equalsIgnoreCase("home")) {
+            if (args.length == 1) {
+                List<HomeItem> homes = plugin.getHomeHandler().playerHomes.get(sender);
+                List<String> homesString = new ArrayList<>();
+                for (HomeItem home : homes) {
+                    homesString.add(home.getHomeName());
+                }
+                return completionPerChar(args[0], homesString);
             } else {
                 return empty;
             }
