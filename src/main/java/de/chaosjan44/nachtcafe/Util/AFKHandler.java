@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AFKHandler {
 
@@ -31,21 +30,24 @@ public class AFKHandler {
 
     public void checkAfk () {
         if (!(afkPTimer.isEmpty())) {
-            for (Map.Entry<Player, Long> entry : afkPTimer.entrySet()) {
-                Player player = entry.getKey();
-                long timestamp = entry.getValue();
+            List<Player> toremove = new ArrayList<>();
+            afkPTimer.forEach((k, v) -> {
                 long curtime= System.currentTimeMillis();
-                long diff = Math.abs(curtime - timestamp);
+                long diff = Math.abs(curtime - v);
                 // minutes a player needs to be afk to be marked as afk
                 int afkmin = 5;
                 if (diff > afkmin * 60 * 1000) {
-                    afkPlayers.add(player);
-                    afkPTimer.remove(player);
+                    afkPlayers.add(k);
+                    toremove.add(k);
                     plugin.getServer().broadcast(Component.text("* ").color(NamedTextColor.GRAY)
-                            .append(Component.text(player.getName()).color(NamedTextColor.GRAY))
+                            .append(Component.text(k.getName()).color(NamedTextColor.GRAY))
                             .append(Component.text(" is now AFK.").color(NamedTextColor.GRAY)));
                 }
+            });
+            for (Player p : toremove) {
+                afkPTimer.remove(p);
             }
+            toremove.clear();
         }
         // start 15 timer till next check
         startAFKTimer();
@@ -73,16 +75,16 @@ public class AFKHandler {
     }
 
     public void startAFKTimer() {
-        Timer timer = plugin.getTimer();
-        if (timer.isRunning())
-            timer.stop();
-        timer.start(15);
+        AfkTimer afkTimer = plugin.getTimer();
+        if (afkTimer.isRunning())
+            afkTimer.stop();
+        afkTimer.start(15);
     }
 
     public void stopAFKTimer() {
-        Timer timer = plugin.getTimer();
-        if (timer.isRunning())
-            timer.stop();
+        AfkTimer afkTimer = plugin.getTimer();
+        if (afkTimer.isRunning())
+            afkTimer.stop();
         afkPTimer.clear();
         afkPlayers.clear();
     }

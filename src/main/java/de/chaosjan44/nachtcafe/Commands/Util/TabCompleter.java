@@ -76,6 +76,33 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
             } else {
                 return empty;
             }
+        } else if (command.getName().equalsIgnoreCase("enderchest") || command.getName().equalsIgnoreCase("ec")) {
+            if (args.length == 1 && sender.hasPermission("nachtcafe.enderchest.others")) {
+                List<String> oPlayers = new ArrayList<>();
+                for (Player p : Bukkit.getOnlinePlayers())
+                    oPlayers.add(p.getName());
+                return completionPerChar(args[0], oPlayers);
+            } else {
+                return empty;
+            }
+        } else if (command.getName().equalsIgnoreCase("invsee")) {
+            if (args.length == 1 && sender.hasPermission("nachtcafe.invsee")) {
+                List<String> oPlayers = new ArrayList<>();
+                for (Player p : Bukkit.getOnlinePlayers())
+                    oPlayers.add(p.getName());
+                return completionPerChar(args[0], oPlayers);
+            } else {
+                return empty;
+            }
+        } else if (command.getName().equalsIgnoreCase("tpa")) {
+            if (args.length == 1 && sender.hasPermission("nachtcafe.tpa")) {
+                List<String> oPlayers = new ArrayList<>();
+                for (Player p : Bukkit.getOnlinePlayers())
+                    oPlayers.add(p.getName());
+                return completionPerChar(args[0], oPlayers);
+            } else {
+                return empty;
+            }
         }
         return empty;
     }

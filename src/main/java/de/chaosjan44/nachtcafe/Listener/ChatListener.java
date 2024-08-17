@@ -8,7 +8,6 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,13 +25,13 @@ public class ChatListener implements Listener, ChatRenderer {
     @Override
     public @NotNull Component render(@NotNull Player source, @NotNull Component sourceDisplayName, @NotNull Component message, @NotNull Audience viewer) {
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
-        Component formatted = Component.text(luckPermsWorker.getPrefix(source) != null ? luckPermsWorker.getPrefix(source) : "")
+        return LegacyComponentSerializer.legacyAmpersand().deserialize(luckPermsWorker.getPrefix(source))
                 .append(sourceDisplayName)
                 .append(Component.text(" »").color(NamedTextColor.GRAY))
                 .append(Component.text(" ").color(NamedTextColor.WHITE))
-                .append(message).color(NamedTextColor.WHITE);
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(ChatColor.translateAlternateColorCodes('&', LegacyComponentSerializer.legacyAmpersand().serialize(formatted)));
+                .append(message);
     }
+
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(final AsyncChatEvent event) {

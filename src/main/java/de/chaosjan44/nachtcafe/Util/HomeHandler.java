@@ -39,8 +39,10 @@ public class HomeHandler {
                 homesCount++;
             }
             playerHomes.put(player, homes);
+            homes.clear();
         }
         playerHomesCount.put(player, homesCount);
+        homelist.clear();
     }
 
     public void loadAllOnlinePlayerHomes() {
