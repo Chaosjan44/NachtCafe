@@ -1,5 +1,5 @@
 name: NachtCafe
-version: '1.2'
+version: '1.3'
 main: de.chaosjan44.nachtcafe.Nachtcafe
 api-version: '1.21'
 website: https://github.com/Chaosjan44/NachtCafe
@@ -18,3 +18,53 @@ commands:
   delwarp:
     description: delete a warp point
     permission: nachtcafe.warp.del
+  afk:
+    description: set's you afk removes you form afk players
+  wb:
+    description: gets you back from afk.
+    aliases:
+      - back
+  sethome:
+    description: sets your home.
+    permission: nachtcafe.home
+  delhome:
+    description: deletes your home.
+    permission: nachtcafe.home
+  homes:
+    description: shows you your homes.
+    permission: nachtcafe.home
+  home:
+    description: teleports you to a home.
+    permission: nachtcafe.home
+  gamemode:
+    aliases:
+      - gm
+    description: switches your gamemode
+    permission: nachtcafe.gamemode
+  enderchest:
+    aliases:
+      - ec
+    description: opens your enderchest
+    permission: nachtcafe.enderchest
+  craft:
+    aliases:
+      - workbench
+    description: opens a workbench
+    permission: nachtcafe.craft
+  invsee:
+    description: opens the inventory of another player
+    permission: nachtcafe.invsee
+  ping:
+    description: puts your ping in chat
+  tpa:
+    description: requests to teleport to a player
+    permission: nachtcafe.tpa
+  tpaccept:
+    description: accept tpa or tpahere request
+    permission: nachtcafe.tpa
+  tpdeny:
+    description: denys tpa/tpahere request
+    permission: nachtcafe.tpa
+  tpacancel:
+    description: cancel tpa/tpahere request
+    permission: nachtcafe.tpa

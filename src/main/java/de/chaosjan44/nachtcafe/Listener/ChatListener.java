@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatListener implements Listener, ChatRenderer {
@@ -31,8 +32,16 @@ public class ChatListener implements Listener, ChatRenderer {
                 .append(message);
     }
 
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(final AsyncChatEvent event) {
         event.renderer(this);
+        // update player's AFK Timer
+        plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onCommand(PlayerCommandSendEvent event) {
+        plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
     }
 }
