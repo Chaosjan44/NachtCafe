@@ -29,12 +29,12 @@ public class SethomeCommand implements CommandExecutor {
                         // check if player doesn't have more homes than he is allowed to - this should probably be done with a config...
                         // default homes
                         Integer allowedhomes = 3;
-                        // booster homes
-                        if (sender.hasPermission("nachtcafe.home.multi.booster"))
-                            allowedhomes = 5;
                         // team homes
-                        else if (sender.hasPermission("nachtcafe.home.multi.team"))
+                        if (sender.hasPermission("nachtcafe.home.multi.team"))
                             allowedhomes = 9999;
+                        // booster homes
+                        else if (sender.hasPermission("nachtcafe.home.multi.booster"))
+                            allowedhomes = 5;
                         if (homeHandler.playerHomesCount.get(sender) == null || homeHandler.playerHomesCount.get(sender) < allowedhomes) {
                             // set new home
                             homeHandler.addHome((Player) sender, args[0], location);

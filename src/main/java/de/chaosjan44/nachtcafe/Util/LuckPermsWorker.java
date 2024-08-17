@@ -5,6 +5,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 
+
 public class LuckPermsWorker {
 
     private final Nachtcafe plugin;
@@ -15,6 +16,4 @@ public class LuckPermsWorker {
         User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
         return (user.getCachedData().getMetaData().getPrefix());
     }
-
-
 }

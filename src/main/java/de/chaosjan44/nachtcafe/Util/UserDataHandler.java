@@ -29,6 +29,7 @@ public class UserDataHandler {
             try {
                 YamlConfiguration UserConfig = YamlConfiguration.loadConfiguration(userFile);
                 UserConfig.set("User.Info.PreviousName", player.getName());
+                UserConfig.set("User.Info.FirstJoin", "1");
                 UserConfig.set("User.Info.UniqueID", player.getUniqueId().toString());
                 UserConfig.save(userFile);
             } catch (Exception e) {

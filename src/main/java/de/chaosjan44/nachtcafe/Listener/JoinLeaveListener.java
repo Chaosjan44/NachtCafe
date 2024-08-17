@@ -16,19 +16,25 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Objects;
+
 
 public class JoinLeaveListener implements Listener {
 
     private final Nachtcafe plugin;
     public JoinLeaveListener(Nachtcafe plugin) {this.plugin = plugin;}
 
-
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
         UserDataHandler userData = new UserDataHandler(plugin, event.getPlayer().getUniqueId());
         userData.createUser(event.getPlayer());
         userData.reloadConfig();
+        if (Objects.requireNonNull(userData.getUserFile().getString("User.Info.FirstJoin")).equalsIgnoreCase("1")) {
+            plugin.getWarpHandler().warp(event.getPlayer(), "spawn");
+            userData.getUserFile().set("User.Info.FirstJoin", "0");
+            userData.reloadConfig();
+            userData.saveUserFile();
+        }
         plugin.getAfkHandler().removeFromAfk(event.getPlayer());
         plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
@@ -59,6 +65,7 @@ public class JoinLeaveListener implements Listener {
 
     public void tabStuff(Player player) {
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
+        player.playerListName();
         player.sendPlayerListHeader(MiniMessage.miniMessage().deserialize("<gradient:#FFFFFF:#6666CC><strikethrough>                                                <reset><!strikethrough>")
                 .append(Component.newline())
                 .append(Component.text("N").color(TextColor.fromCSSHexString("#C849FF")))
