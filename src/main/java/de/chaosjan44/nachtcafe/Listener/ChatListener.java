@@ -1,36 +1,38 @@
 package de.chaosjan44.nachtcafe.Listener;
 
 import de.chaosjan44.nachtcafe.Nachtcafe;
-import de.chaosjan44.nachtcafe.Util.ColorHelper;
 import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
+import io.papermc.paper.chat.ChatRenderer;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.jetbrains.annotations.NotNull;
 
-public class ChatListener implements Listener {
+public class ChatListener implements Listener, ChatRenderer {
 
     private final Nachtcafe plugin;
     public ChatListener(Nachtcafe plugin) {this.plugin = plugin;}
 
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onChat(final AsyncPlayerChatEvent event) {
+    // replace renderer so we can have our fancy prefixes :p
+    @Override
+    public @NotNull Component render(@NotNull Player source, @NotNull Component sourceDisplayName, @NotNull Component message, @NotNull Audience viewer) {
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
-        ColorHelper colorHelper =  plugin.getColorHelper();
+        return LegacyComponentSerializer.legacyAmpersand().deserialize(luckPermsWorker.getPrefix(source))
+                .append(sourceDisplayName)
+                .append(Component.text(" »").color(NamedTextColor.GRAY))
+                .append(Component.text(" ").color(NamedTextColor.WHITE))
+                .append(message);
+    }
 
-        final String message = event.getMessage();
-        final Player player = event.getPlayer();
-
-        String format = "{prefix}{name} &7»&r {message}"
-                .replace("{prefix}", luckPermsWorker.getPrefix(player) != null ? luckPermsWorker.getPrefix(player) : "")
-                .replace("{name}", player.getName());
-
-        format = colorHelper.colorize(colorHelper.translateHexColorCodes(format));
-
-        event.setFormat(format.replace("{message}", player.hasPermission("nachtcafe.colorcodes") && player.hasPermission("nachtcafe.rgbcodes")
-                ? colorHelper.colorize(colorHelper.translateHexColorCodes(message)) : player.hasPermission("nachtcafe.colorcodes") ? colorHelper.colorize(message) : player.hasPermission("nachtcafe.rgbcodes")
-                ? colorHelper.translateHexColorCodes(message) : message).replace("%", "%%"));
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onChat(final AsyncChatEvent event) {
+        event.renderer(this);
     }
 }

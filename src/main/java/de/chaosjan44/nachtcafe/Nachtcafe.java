@@ -5,7 +5,6 @@ import de.chaosjan44.nachtcafe.Commands.Warp.*;
 import de.chaosjan44.nachtcafe.Configs.WarpConfig;
 import de.chaosjan44.nachtcafe.Listener.ChatListener;
 import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
-import de.chaosjan44.nachtcafe.Util.ColorHelper;
 import de.chaosjan44.nachtcafe.Util.LuckPermsWorker;
 import de.chaosjan44.nachtcafe.Util.WarpHandler;
 import net.kyori.adventure.text.Component;
@@ -41,7 +40,6 @@ public final class Nachtcafe extends JavaPlugin {
     private WarpConfig warpConfig;
 
     private LuckPermsWorker luckPermsWorker;
-    private ColorHelper colorHelper;
     private WarpHandler warpHandler;
 
 
@@ -49,7 +47,7 @@ public final class Nachtcafe extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         if (!setupLuckPerms()) {
-            getComponentLogger().error(PREFIX.append(Component.text("Can't get ahold of LuckPerms - disabling now.").color(NamedTextColor.DARK_RED)));
+            getComponentLogger().error(PREFIX.append(Component.text("Can't get LuckPerms - disabling now.").color(NamedTextColor.DARK_RED)));
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -84,7 +82,7 @@ public final class Nachtcafe extends JavaPlugin {
         pluginManager.registerEvents(new JoinLeaveListener(this), this);
         pluginManager.registerEvents(new ChatListener(this),this);
 
-        // register comands
+        // register commands
         Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand(this));
         Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new TabCompleter(this));
 
@@ -102,7 +100,6 @@ public final class Nachtcafe extends JavaPlugin {
 
         // register utils
         luckPermsWorker = new LuckPermsWorker(this);
-        colorHelper = new ColorHelper();
         warpHandler = new WarpHandler(this);
 
         // load warps
@@ -113,7 +110,5 @@ public final class Nachtcafe extends JavaPlugin {
     public WarpConfig getWarpConfig() {return warpConfig;}
 
     public LuckPermsWorker getLuckPermsWorker() {return luckPermsWorker;}
-    public ColorHelper getColorHelper() {return colorHelper;}
     public WarpHandler getWarpHandler() {return warpHandler;}
-
 }
