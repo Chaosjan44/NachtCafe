@@ -29,7 +29,7 @@ public class HomeHandler {
         playerHomesList.remove(player);
         UserDataHandler userData = new UserDataHandler(plugin, player.getUniqueId());
         userData.reloadConfig();
-        List<String> homelist = userData.getUserFile().getStringList("User.Homes.List");
+        List<String> homelist = userData.getUserFile().getStringList("User.Homes");
         playerHomesList.put(player, homelist);
         Integer homesCount = 0;
         if (!homelist.isEmpty()) {
@@ -39,10 +39,8 @@ public class HomeHandler {
                 homesCount++;
             }
             playerHomes.put(player, homes);
-            homes.clear();
         }
         playerHomesCount.put(player, homesCount);
-        homelist.clear();
     }
 
     public void loadAllOnlinePlayerHomes() {
@@ -65,9 +63,9 @@ public class HomeHandler {
 
     public void addHome(Player player, String homename, Location location) {
         UserDataHandler userData = new UserDataHandler(plugin, player.getUniqueId());
-        if (!playerHomesList.get(player).contains(homename)) {
+        if (playerHomesList.get(player) == null || !playerHomesList.get(player).contains(homename)) {
             playerHomesList.get(player).add(homename);
-            userData.getUserFile().set("User.Homes.List", playerHomesList.get(player));
+            userData.getUserFile().set("User.Homes", playerHomesList.get(player));
         }
         userData.getUserFile().set("User.Home." + homename + "." + "world", location.getWorld().getName());
         userData.getUserFile().set("User.Home." + homename + "." + "x", location.getX());
@@ -83,7 +81,7 @@ public class HomeHandler {
         UserDataHandler userData = new UserDataHandler(plugin, player.getUniqueId());
         userData.getUserFile().set("User.Home." + homename, null);
         playerHomesList.get(player).remove(homename);
-        userData.getUserFile().set("User.Homes.List", playerHomesList.get(player));
+        userData.getUserFile().set("User.Homes", playerHomesList.get(player));
         userData.saveUserFile();
         loadPlayerHomes(player);
     }

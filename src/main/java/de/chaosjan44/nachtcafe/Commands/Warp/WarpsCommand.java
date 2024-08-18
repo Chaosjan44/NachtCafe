@@ -4,6 +4,7 @@ import de.chaosjan44.nachtcafe.Nachtcafe;
 import de.chaosjan44.nachtcafe.Util.WarpHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
@@ -28,7 +29,9 @@ public class WarpsCommand implements CommandExecutor {
                         .append(Component.text("Warps:").color(NamedTextColor.GRAY)));
                 for (String warp : warpHandler.warps) {
                     sender.sendMessage(Component.text("- ").color(NamedTextColor.GRAY)
-                            .append(Component.text(warp).color(TextColor.fromCSSHexString("#C849FF"))).clickEvent(ClickEvent.runCommand("/warp " + warp)));
+                            .append(Component.text(warp).color(TextColor.fromCSSHexString("#C849FF")))
+                            .hoverEvent(HoverEvent.showText(Component.text("click to teleport to this warp.").color(TextColor.fromCSSHexString("#C849FF"))))
+                            .clickEvent(ClickEvent.runCommand("/warp " + warp)));
                 }
             }
             return true;

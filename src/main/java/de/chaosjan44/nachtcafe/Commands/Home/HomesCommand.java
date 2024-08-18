@@ -4,6 +4,7 @@ import de.chaosjan44.nachtcafe.Nachtcafe;
 import de.chaosjan44.nachtcafe.Util.HomeHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
@@ -30,13 +31,15 @@ public class HomesCommand implements CommandExecutor {
                                     .append(Component.text("Your Homes:").color(NamedTextColor.GRAY)));
                             for (String home : homeHandler.playerHomesList.get(sender))
                                 sender.sendMessage(Component.text("- ").color(NamedTextColor.GRAY)
-                                        .append(Component.text(home).color(TextColor.fromCSSHexString("#C849FF"))).clickEvent(ClickEvent.runCommand("/home " + home)));
+                                        .append(Component.text(home).color(TextColor.fromCSSHexString("#C849FF")))
+                                        .hoverEvent(HoverEvent.showText(Component.text("click to teleport to this home.").color(TextColor.fromCSSHexString("#C849FF"))))
+                                        .clickEvent(ClickEvent.runCommand("/home " + home)));
                         } else
                             sender.sendMessage(Nachtcafe.PREFIX
-                                    .append(Component.text("There are no warps.").color(NamedTextColor.GRAY)));
+                                    .append(Component.text("You have no homes.").color(NamedTextColor.GRAY)));
                     } else
                         sender.sendMessage(Nachtcafe.PREFIX
-                                .append(Component.text("There are no warps.").color(NamedTextColor.GRAY)));
+                                .append(Component.text("You have no homes.").color(NamedTextColor.GRAY)));
                     return true;
                 } else
                     sender.sendMessage(Nachtcafe.PREFIX

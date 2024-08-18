@@ -27,14 +27,17 @@ public class JoinLeaveListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
         UserDataHandler userData = new UserDataHandler(plugin, event.getPlayer().getUniqueId());
-        userData.createUser(event.getPlayer());
-        userData.reloadConfig();
-        if (Objects.requireNonNull(userData.getUserFile().getString("User.Info.FirstJoin")).equalsIgnoreCase("1")) {
-            event.getPlayer().teleport(plugin.getWarpHandler().loadLocation("spawn"));
-            userData.getUserFile().set("User.Info.FirstJoin", "0");
-            userData.saveUserFile();
+        if (userData.getUserFile().getString("User.Info.FirstJoin") != null) {
+            userData.createUser(event.getPlayer());
             userData.reloadConfig();
+            if (Objects.requireNonNull(userData.getUserFile().getString("User.Info.FirstJoin")).equalsIgnoreCase("1")) {
+                event.getPlayer().teleport(plugin.getWarpHandler().loadLocation("spawn"));
+                userData.getUserFile().set("User.Info.FirstJoin", "0");
+                userData.saveUserFile();
+                userData.reloadConfig();
+            }
         }
+        plugin.getHomeHandler().loadPlayerHomes(event.getPlayer());
         plugin.getAfkHandler().removeFromAfk(event.getPlayer());
         plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());
         LuckPermsWorker luckPermsWorker =  plugin.getLuckPermsWorker();
