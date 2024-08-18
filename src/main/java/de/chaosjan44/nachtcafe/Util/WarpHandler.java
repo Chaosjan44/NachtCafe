@@ -24,8 +24,7 @@ public class WarpHandler {
     }
 
     public void warp(Player player, String warp) {
-        UserDataHandler userData = new UserDataHandler(plugin, player.getUniqueId());
-        if (player.hasPermission("nachtcafe.warp.instant") || Objects.requireNonNull(userData.getUserFile().getString("User.Info.FirstJoin")).equalsIgnoreCase("1")) {
+        if (player.hasPermission("nachtcafe.warp.instant")) {
             player.teleport(loadLocation(warp));
             player.sendMessage(Nachtcafe.PREFIX
                     .append(Component.text("Teleported you to warp ").color(NamedTextColor.GRAY))

@@ -30,10 +30,10 @@ public class JoinLeaveListener implements Listener {
         userData.createUser(event.getPlayer());
         userData.reloadConfig();
         if (Objects.requireNonNull(userData.getUserFile().getString("User.Info.FirstJoin")).equalsIgnoreCase("1")) {
-            plugin.getWarpHandler().warp(event.getPlayer(), "spawn");
+            event.getPlayer().teleport(plugin.getWarpHandler().loadLocation("spawn"));
             userData.getUserFile().set("User.Info.FirstJoin", "0");
-            userData.reloadConfig();
             userData.saveUserFile();
+            userData.reloadConfig();
         }
         plugin.getAfkHandler().removeFromAfk(event.getPlayer());
         plugin.getAfkHandler().updateAFKPTimer(event.getPlayer());

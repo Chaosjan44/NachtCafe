@@ -16,6 +16,7 @@ import de.chaosjan44.nachtcafe.Configs.WarpConfig;
 import de.chaosjan44.nachtcafe.Listener.ChatListener;
 import de.chaosjan44.nachtcafe.Listener.JoinLeaveListener;
 import de.chaosjan44.nachtcafe.Listener.PlayerMoveListener;
+import de.chaosjan44.nachtcafe.Listener.PlayerRespawnListener;
 import de.chaosjan44.nachtcafe.Util.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -98,6 +99,7 @@ public final class Nachtcafe extends JavaPlugin {
         pluginManager.registerEvents(new JoinLeaveListener(this), this);
         pluginManager.registerEvents(new ChatListener(this),this);
         pluginManager.registerEvents(new PlayerMoveListener(this), this);
+        pluginManager.registerEvents(new PlayerRespawnListener(this), this);
 
         // register commands
         // Warp Stuff
